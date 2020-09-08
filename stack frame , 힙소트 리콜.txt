@@ -1,0 +1,37 @@
+stack frame 에 관해서. 
+
+heap에 대한 코딩을 짜다가.
+
+함수 A-> 함수 B 호출 , 함수 B-> 함수 A 호출로 알고리즘을 짜려고 했다.
+
+그런데 이것이 안 되는 이유를 지금 설명하려고한다.
+
+우선 .
+
+
+메모리는 
+
+heap(동적메모리)(free memory)
+stack(local var)
+
+
+--permanet storage area--
+static variable(정적변수)
+global variable.(전역변수)
+code(코드영역)
+
+
+메모리는 구성이 되어있다.
+
+main 함수도 그렇고 , 다른 코드의 함수들은 스택으로 메모리에 쌓이게 되는데,
+
+function이 invoked 되고 return(!리턴!) 하게 되면 , stack에서 함수는 pop 이 되므로 더 이상 
+
+recall 할 수 없게된다.
+
+
+
+
+
+
+
