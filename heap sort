@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void swap(int* a, int* b) {
+
+	int x;
+
+	x = *a;
+	*a = *b;
+	*b = x;
+}
+
+
+void making_Heapsort(int a[], int n, int i) {//i=largest variable for making the max heap
+	int largest = i;
+	int L = (i * 2) + 1;
+	int R = (i * 2) + 2;
+
+	if (L<n && a[L]>a[largest])
+		largest = L;
+	if (R<n && a[R]>a[largest])
+		largest = R;
+
+	if (i != largest) {
+		swap(&a[largest], &a[i]);
+		making_Heapsort(a, n, largest); //바뀐 트리의 아래의 까지 체크해서 swap하지 못한 것을 체크
+	}
+
+}
+
+
+
+void heapSort(int a[], int n)
+{
+	int i;
+	for (i = n / 2 - 1; i >= 0; i--) { //모든 트리의 largest에 개입해서 체크
+		making_Heapsort(a, n, i);	
+
+	}
+
+	for (i = n - 1; i > 0; i--) {
+		swap(&a[0], &a[i]);
+		making_Heapsort(a, i, 0); //틀린 것 , 변수는 i이지 n-1이 아니다.
+	}
+	
+
+
+}
+
+
+
+int main() {
+	int i;
+	int a[7] = { 2,5,10,11,16,12,15};
+	heapSort(a, 7);
+	for (i = 0; i < 7; i++)
+	{
+		printf("%4d", a[i]);
+
+	}
+}
