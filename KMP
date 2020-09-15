@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int KMP(char* arr, char *pat ,int n,int m) {
+	//n means -> the number of pattern number
+
+	//1.실패 함수 작성
+
+	//2 .KMP 함수 작성.
+
+	
+
+	//1번을 실행할 떄도 prefix suffix 최대로 일치하는 값을 통해 fail[]배열을 완성시킨다.
+	int fail[1024] = { 0 };
+	int j = 0;
+	int i;
+	//변화하는 값은 i이다 , 그림을 그려라.
+	for (i = 1; i < n; i++) {
+		while (j > 0 && pat[i] != pat[j]){ // 이 조건이 ->j가 0이고 i가 0이라서 무한루프가 돌 것이라고 생각하는데 그렇지 않고 동일 하지 않으니까 루프를 진행하지 않고 i값을 증가시키는 것이다.
+		//그리고 i값은 증가하는 반면 ,j값은 loop를 통해 증가하지 않는데 , 일치하는 값을 찾을 떄까지 i값을 증가시키며 동일한 문자열을 찾는다.
+			j = fail[j - 1]; // 이유는 J-1까지는 일치했다는 점을 이용하는 것이다 . 그럼 ? -> 여기서 얼마나 이동할 것인지를 FAIL을 통해 SUFFIX와 PREFIX가 최대로 일치하는 값만큼 이동하는 것이다.
+			}
+			
+			if (pat[i] == pat[j])
+				fail[i] = ++j; 
+			//fail[i]가 되는 이유는 순차적으로 증감값이 기때문에 i로 fail[i]로 하는 것이다.
+
+		}
+		
+		//2 .KMP 함수 작성
+		i = 0;
+		j = 0;
+		
+		while (arr[i] !=NULL && pat[j]!= NULL) {
+			
+
+			if (arr[i] == pat[j]) {
+				i++;
+				j++;
+			}
+			else if (j == 0) {
+				i++;
+			}
+
+			else {
+				j = fail[j - 1]; // 어디서 부터 시작할지 ,fail을 통해서 -> prefix과 suffix가 일치하는 최댓값을 통해서 , 옮길위치를 정한다.
+			}
+			
+		} 
+
+
+		return i;
+	}
+
+
+
+
+
+
+
+
+
+
+
+int main() {	
+
+	char* H = "ABAABABABC";
+	char* S = "ABABAB";
+	printf("%d",KMP(H, S,6,10));
+}
