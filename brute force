@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+
+
+
+int brute_Force(char* txt, char* pat) {
+//brute_Force 법은 단순법이다 .
+
+	int pp = 0;
+	int pt = 0;
+	
+	//while (conditional -> find or not)
+	while (pat[pp] != NULL && txt[pt] != NULL) {
+		if (pat[pp] == txt[pt])
+		{
+			++pp;
+			++pt;
+
+		}
+		
+		else 
+			{
+				pt = pt - pp + 1; //there is a rule for pt -> we need to  plus 1 (pt) before doing this conditional. so back to the original -> this means pt-pp ->  so it could be -> pt=pp-1;  
+								
+				pp = 0; // back to the origanl place for pp
+			}
+	
+		
+	}
+	return pt-pp; //this is the answer for the start posion of pt.
+	
+	if (txt[pt] == NULL) // if the searching is fail
+		return -1;
+}
+
+
+int main() {
+
+	char* txt = "ABABCDEFGHA";
+	char* pat = "ABC";
+	printf("%d", brute_Force(txt, pat));
+}
