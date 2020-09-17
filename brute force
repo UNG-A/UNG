@@ -6,7 +6,6 @@
 
 
 int brute_Force(char* txt, char* pat) {
-//brute_Force 법은 단순법이다 .
 
 	int pp = 0;
 	int pt = 0;
