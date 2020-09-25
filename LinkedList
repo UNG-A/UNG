@@ -1,0 +1,88 @@
+// Linked list operations in C
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+	int data;
+	struct Node* next;
+
+};
+
+//head 에 value 를 넣는 것 . 근데 결국 덮어 쓰기처럼 된다 . 덮어쓰기가 아닌 것으로 하면 되는데 , return value가 ref가 같아야하므로.
+void Inserthead(struct Node** ref, int data) {
+
+	struct Node* newNode = malloc(sizeof(struct Node));
+
+	newNode->data = data;
+	newNode->next = (*ref);
+
+	(*ref) = newNode;
+
+}
+
+void InsertNext(struct Node*  prev, int data) {
+	struct Node* newNode = malloc(sizeof(struct Node));
+	newNode->data = 15;
+	newNode->next = prev->next;
+	prev->next = newNode;
+
+}
+
+void InsertRear(struct Node** current, int data) {
+
+	struct Node* newNode = malloc(sizeof(struct Node));
+
+	while ((*current)->next != NULL)
+	{
+		(*current)->next = (*current)->next->next;
+		//current는 더이상 연결리스트가 아니게 된다.
+	}
+	//이렇게 되면 마지막 current는 current->next == NULL
+
+	
+	newNode->data = 25;
+	newNode->next=NULL;
+	(*current)->next =newNode;
+				// 이 말은 newNode의 주소는 current의 next를 가르킨다. 
+	  ;
+	//내가 짠 코드는 새로운 주소값이 되게되고 ,연결 리스트를 끊어버리게된다.
+	//(*current)->next = newNode; 이 말은 즉슨 -> head->next 는 newNode 가되고 , 나머지 연결리스트는 좇도 신경쓰지 않 겠다.
+}
+
+void printNode(struct Node** current) {
+	
+	printf("%d\n", (*current)->data);
+	while ((*current)->next != NULL) {
+
+		printf("%d\n", (*current)->next->data);
+
+		(*current)->next = (*current)->next->next;
+
+	}
+
+}
+
+int main() {
+
+	struct Node* head = malloc(sizeof(struct Node));
+	struct Node* second = malloc(sizeof(struct Node));
+
+	head->data = 10;
+	head->next = second;
+
+	second->data = 20;
+	second->next = NULL;
+
+
+
+Inserthead(&head, 1);
+InsertNext(head->next, 15);
+InsertRear(&head,25);
+//printf("%d", head->next->next->data);
+printNode(&head);
+
+}
+
+//pointer를 이해할려면 , call by value 랑 call by reference
+//그리고 내가 짠 것은 head를 덮었느느 것이다.
