@@ -9,6 +9,45 @@ typedef struct Node {
 
 };
 
+//데이터와 일치하는 노드를 삭제하는 함수
+
+// 1. 데이터가 일치하는 노드가 있을경우 -> 가르키는 노드 HEAD를 null 값으로 만들고 NEXT를 다음으로 향하게 하면될 것같다.
+// 2. 데이터가 일치하는 노드가 없을 경우 -> 검색을 종료한다.  다른 조치를 취할 필요가없지.
+
+void deleteNode(struct Node** head_ref, int key)
+{
+	// Store head node 
+	struct Node* temp = *head_ref;
+	struct Node* prev = malloc(sizeof(struct Node));
+	// If head node itself holds the key to be deleted 
+	if (temp != NULL && temp->data == key)
+	{
+		*head_ref = temp->next;   // Changed head 
+		free(temp);               // free old head 
+		return;
+	}
+
+	// Search for the key to be deleted, keep track of the 
+	// previous node as we need to change 'prev->next' 
+	while (temp != NULL && temp->data != key)
+	{
+		prev = temp; // 이게 포인트구나 !! ->prev와 temp를 같다고 함으로써 ,매번 prev가 가르키는 포인터는 temp가 증가하면서 가르키는 데이터의 주소값이다. 즉 prev는 head를 가르키지 않고 매번 while문에 의하여 업데이트 된다는 점이다.
+		temp = temp->next;
+	}
+
+	// If key was not present in linked list 
+	if (temp == NULL) return;
+
+	// Unlink the node from linked list 
+	prev->next = temp->next ; // 여기서 결과적으로 temp와 prev는 같은 인덱스의 데이터를 가르키고있다. 틀렸다. -> 그게아니라 while문을 확인해보면
+	// prev를 업데이트하면 10이되고 temp , temp->next를 하면 temp는 15로 업데이트가 된다. 그리고 나서 key값이 일치하므로 while문은 실행되지 않으므로
+	// prev는 10 temp는 15를 가르킨다.
+	//prev의 next는 15이고 temp의 next는 20이므로 , 15가 아닌 20을 가르키게되고
+	// 현재 temp가 가르키는 index의 데이터는 15이므로 1 10 20 25가 된다.
+	free(temp);  // Free memory 
+}
+
+
 //head 에 value 를 넣는 것 . 근데 결국 덮어 쓰기처럼 된다 . 덮어쓰기가 아닌 것으로 하면 되는데 , return value가 ref가 같아야하므로.
 void Inserthead(struct Node** ref, int data) {
 
@@ -32,23 +71,22 @@ void InsertNext(struct Node*  prev, int data) {
 void InsertRear(struct Node** current, int data) {
 
 	struct Node* newNode = malloc(sizeof(struct Node));
-
-	while ((*current)->next != NULL)
-	{
-		(*current)->next = (*current)->next->next;
-		//current는 더이상 연결리스트가 아니게 된다.
-	}
-	//이렇게 되면 마지막 current는 current->next == NULL
-
-	
-	newNode->data = 25;
-	newNode->next=NULL;
-	(*current)->next =newNode;
-				// 이 말은 newNode의 주소는 current의 next를 가르킨다. 
-	  ;
-	//내가 짠 코드는 새로운 주소값이 되게되고 ,연결 리스트를 끊어버리게된다.
-	//(*current)->next = newNode; 이 말은 즉슨 -> head->next 는 newNode 가되고 , 나머지 연결리스트는 좇도 신경쓰지 않 겠다.
+	struct Node* temp = *current; //**temp라는 변수는 current가 가르키는 포인터와 동일하므로 동일한 연결리스트를 가르키는 주소값이다.**
+	newNode->data = data;
+	newNode->next = NULL;
+	while (temp->next != NULL) {
+		temp = temp->next;
 }
+	//즉 current->next 는 null 값이라는 말이다.
+	temp->next = newNode;
+
+		
+}
+
+//know I know how this is worked . 
+//1. current와 temp를 동일한 주소를 가르킨다.
+//2. 즉 temp의 값을 변경하게되면 temp는 결국 while문에 의해 20이라는 데이터를 가진 노드와 25를 가진 데이터를 가진노드로 연결리스트를 진행하게된다.
+//3. 결국 매개변수는 current 이다. 하지만 temp와 동일한 주소값을 가지고 그로인해서 노드를 연결했으므로 즉 25가 추가로 나오게된다. 
 
 void printNode(struct Node** current) {
 	
@@ -59,7 +97,7 @@ void printNode(struct Node** current) {
 
 		(*current)->next = (*current)->next->next;
 
-	}
+		}
 
 }
 
@@ -80,9 +118,10 @@ Inserthead(&head, 1);
 InsertNext(head->next, 15);
 InsertRear(&head,25);
 //printf("%d", head->next->next->data);
+deleteNode(&head, 15);
 printNode(&head);
 
 }
 
 //pointer를 이해할려면 , call by value 랑 call by reference
-//그리고 내가 짠 것은 head를 덮었느느 것이다.
+//그리고 내가 짠 것은 head를 덮었느느 것이
