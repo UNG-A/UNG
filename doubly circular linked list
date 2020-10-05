@@ -1,0 +1,143 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//doubly circular linked list
+
+
+struct Node {
+
+	int data;
+	struct Node* prev;
+	struct Node* next;
+
+};
+//delete Node 는 같은 key 값을 찾아서 지우면 되는구나. key값과 일치하는 것을 찾기위해 temp를 이동시키고 찾은 이후에 free
+void DeleteNode(struct Node** head,int key) {
+
+
+	struct Node* temp = (*head);
+
+	while (temp->data != key) {
+		temp = temp->next;
+	}
+
+	struct Node* link = temp->prev;
+	struct Node* link2 = temp->next;
+//temp->data ==key 이다. 현재 temp 가 가르키는 값은..
+	link->next = temp->next;
+	link2->prev = temp->prev;
+
+	free(temp);
+	//내가 가진 의문점은 이것이다 .head=temp 를 하게되면 , free(temp)를 선언하기 전에 head=temp를 하게 된다면 , head가 가르키는 포인터가 temp가 되므로 , 안 된다.
+	//하지만 ,head는 그대로 나두어도 다른 노드의 인덱스 값이 바뀐다고? -> 여기서 생각해야할 것이 temp 사용해 , head가 가르키는 포인터를 변경하지 않고, 메모리 값에 직접적으로 접근해서 값을 변경하고 free를 해주었기 때문에
+	// 더 이상 그 메모리에는 접근 할 수가 없다 . 그리고  head의 포인터는 그저 , 연결리스트의 첫 번쨰 , 주소일 뿐인 것이다 .
+	//head= temp를 해주지 않았다고 해서 값이 안 바뀌는게 아니라 
+	//요점 1. head의 포인터는 그저 연결리스트의 첫 번쨰 주소 값이고 , 연결되어있으므로 next ,prev로 접근 가능한 것이다.
+	//요점 2. temp를 이용하여 ,head의 포인터를 변경하지 않고 , 메모리에 직접적으로 접근해서 값을 변경하고 초기화 했으므로 head = temp를 하지 않았어도 바뀐 값을 얻을 수 있는 것이다.
+
+
+}
+
+
+
+
+
+void InsertFront(struct Node** head, int data) {//I put the last Node as a parameter. last means  insertfront의 매개변수를 head->prev로 했으므로 *last 주소값을 변경하면, head->prev가 바뀌는 것이다. 
+	struct Node* newNode = malloc(sizeof(struct Node));
+	struct Node* temp = (*head)->prev; //points out last node
+
+	newNode->data = data;
+	newNode->next =	(*head);
+	newNode->prev = temp;
+	temp->next = newNode;
+	
+	
+	(*head) = newNode; //포인터는 배열의 첫 번쨰 값을 나타낸다. 그러니까 temp가 아닌 newNode로 포인터를 지정하면 된다. temp는 head->prev이므로.
+	
+}
+
+void InsertRear(struct Node** head, int data) {
+
+	struct Node* newNode = malloc(sizeof(struct Node));
+
+
+
+	if ((*head) == NULL) {
+
+		newNode->data = data;
+		newNode->next = newNode;
+		newNode->prev = newNode;
+		(*head) = newNode;
+	}
+	else {
+		struct Node* temp = (*head)->prev;
+		newNode->data = data;
+		temp->next = newNode;
+		newNode-> prev = temp;
+		newNode->next = (*head); // head의 가르키는 포인터를 바꾸지 않으므로 괜찮다.
+		(*head)->prev = newNode;
+		(*head) = temp;
+	}
+
+
+}
+
+void InsertCurrent(struct Node** head, int data, int key) {//solution 이다 . current값을 key값과 할 때까지 옮겨준다.
+
+
+
+	struct Node* newNode = malloc(sizeof(struct Node));
+	struct Node* temp = (*head);
+	
+
+	while (temp->data != key) {
+
+		temp = temp->next;
+	}
+
+	//이제 temp는 key값을 가르킨다. 즉 temp->data =1;
+	struct Node* last = (*head)->prev;
+	newNode->data = data;
+	newNode->next = temp->next;
+	newNode->prev = temp;
+	temp->next = newNode;
+	last->prev = newNode;
+
+	//(*head)->next = temp; //이걸 하면  안 되는 거지 지금 pointer valuable temp는 1, 5, 10을 가르키게된다. 반면에 head는 0 , 1 , 10을 가르키게된다.
+	//포인터 변수는 인덱스의 첫 번쨰 값을 가르키므로.
+
+}
+//current의 포인터는 바뀌어도 별 상관이 없을 것같은데?
+
+void Print_Node(struct Node** head) {
+
+	int data = (*head)->data;
+	struct Node* temp = (*head);
+	printf("%3d", temp->data);
+	temp = temp->next;
+	while (temp->data != data) {
+		printf("%3d", temp->data);
+		temp = temp->next;
+		
+	}
+
+}
+
+int main() {
+
+	struct Node* head = NULL; //now is NULL
+
+
+	
+	InsertRear(&head, 1);
+	InsertRear(&head, 10);
+	InsertFront(&head, 0); // 입력한 매개변수가 head->prev이면. 니까 ,insert front의 매개변수 last를 포인터 주소로 마지막에 할당한 것은 head->prev가 되는 것이다. 
+	InsertCurrent(&head, 5, 1);// 즉 head->next 포인터를 변경시켰다는 것이다. //그냥 함수 입력값을 head로주자.
+	
+	DeleteNode(&head,5);
+	Print_Node(&head);
+	//insertfront 에서 매개변수를 head->next로 주었다 . 매개변수를 newNode 포인터와 동일시하더라도 입력값이 head->prev 이므로 head->prev는 = last의 포인터와 동일시 되므로
+	//내가 원하는 코드가 나오지 않았던 것이다. ->1.입력값을 head로 해서 , 변경하는 포인터의 첫 시작점을 head로 해준다,(나머지 다른 포인터는 다르게해주는 임시변수를 선언해서  head포인터를 수정해준다)
+	// current는 입력값이 head이므로 current 까지 어떻게 접근할지 생각을 해야한다.
+
+}
