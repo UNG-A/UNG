@@ -1,0 +1,164 @@
+
+#include<stdio.h> 
+#include<stdlib.h> 
+
+#define SIZE 10
+
+struct bucket* bucketArray = NULL; //global scope
+
+struct Node {
+
+	int data;
+	struct Node* next;
+
+};
+
+struct bucket {
+
+	int count;
+	struct Node* head;
+
+};
+
+struct Node* CreateNode(int data){
+
+	struct Node* newNode = malloc(sizeof(struct Node));
+
+	newNode->data = data;
+	newNode->next = NULL;
+
+	return newNode;// newNode 의 객체를 반환
+}
+
+int MakeHash(int data) {
+
+	return data % SIZE;
+}
+
+void add(int data) {
+	int HashIndex = MakeHash(data);
+
+	struct Node* newNode = CreateNode(data); //create 노드는 Node 객체 포인터를 반환하므로 newNode 의 객체가 그 객체를 사용할 수 있다.
+	//No collision 
+	if (bucketArray[HashIndex].count == 0) //count 가 초기화가 되지 않았다.
+	{	
+		bucketArray[HashIndex].head = newNode;
+		bucketArray[HashIndex].count = 1;
+
+	}
+
+	//collision occurs
+	
+	else {
+		
+		newNode->next = bucketArray[HashIndex].head;
+		bucketArray[HashIndex].head = newNode;
+		bucketArray[HashIndex].count++;
+
+	}
+
+}
+/*
+데이터가 일치하는 값을 찾아서 free 를 해주면 되겠다.
+*/
+
+int Remove(int data) {
+
+	int RemoveHash = MakeHash(data);
+	struct Node* temp = bucketArray[RemoveHash].head;
+	while (temp->next->data != data) {// bucket은 node 의 구조체 포인터이다 .
+		//NULL값을 만날 떄까지 서칭해주면서  -> 값을 서칭한다.
+		if (temp == NULL) {
+
+			return -1;
+
+
+		}
+	
+		temp = temp->next;
+
+	}
+	// if the function parameter is eqaul to Node -> it will be free.
+	//before get Node free I need to connect with prev and next.
+
+	struct Node* TempNode2 = temp->next; // temp->next->data == data
+	temp->next = TempNode2->next;
+	bucketArray[RemoveHash].count--;
+
+	free(TempNode2); // 해결  -> x 반환하는 포인터를 정해야해. 초기화를 temp로 하고 , head의 포인터를 변경하지 않고 , 문제를 해결하는 게 포인트이다.
+
+//	return bucketArray[RemoveHash].head;
+	//case 1. find the eqaul data with function parameter.
+
+
+	//case 2. can't find
+}
+
+void display() {
+	
+	int i;
+	for (i = 0; i < SIZE; i++) {
+
+		while (bucketArray[i].head != NULL) {
+
+			printf("   Array[%d]: %d" ,i, bucketArray[i].head->data);
+
+			bucketArray[i].head = bucketArray[i].head->next;
+		
+		}
+		printf("\n");
+
+	}
+		/*
+		solution .
+		1.bucketArray 에 접근한다.
+		연결리스트가 NULL 값이 될 떄까지 출력한다. -> 이부분에 대해서 , 좀 더 고민이 필요하다 .
+
+		2.FOR문으로 모든 BUCKETARRAY의 인덱스에 접근한다.
+		*/
+
+}
+ /* 
+ 
+ search 스스로 해보기.
+ 
+ */
+int search(int data) {
+	int HashIndex = MakeHash(data);
+	struct Node* temp = bucketArray[HashIndex].head;
+	int counter = 0;
+	while (temp->next != NULL) {
+
+		if (temp->data==data) {
+
+			printf("the data is in %d index and %dth", HashIndex, counter); //count는 몇 개 있는지 알려주는 거잖아.
+			return 1;
+		}
+		// proceeding
+		temp = temp->next;
+		counter++;
+	}
+	return -1;
+
+
+}
+
+int main() {
+
+	// global scope 에 -> 구조체 포인터 bucketArray 선언 -> main 에서 선언을 할 필요없이 바로 사용할 수 있다.
+
+	bucketArray = (struct bucket*)calloc(SIZE , sizeof(struct bucket));
+
+	add(10);
+	add(20);
+	add(30);
+	add(11);
+	add(12);
+	add(13);
+	Remove(10); //출력을 head 포인터로 하기 떄문에 , head포인터를 수정하지 않고 , -> 다른 임시포인터를 생성하여 포인트를 바꾸기로한다.
+	search(20); //30 , 20 이 나와야하는데 head가 가르키는 포인터가 20이므로 , display가 20이 나왔다.
+	display();
+
+
+
+}
