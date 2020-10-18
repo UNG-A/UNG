@@ -1,0 +1,117 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+//open addressing.
+//1. linear . chache friendly but occurs clustering. -> linear 도 실수한 게 있어 -> recall을 하는 거야 . MakeHashIndex temp의 변수를 초기화 시켜서 다시 하는 거지 . -> 그 상태로 더 하는 게 아니야 . 근데 사실상 되긴해.
+//2. quadratic. ! .
+//3. double hasing 은 배열의 개수와 stepsize 즉 Hashfunction2의 Number를 신경써야한다. 예를 들면 array의 개수가 15개이고 , Hashfunction 의 PRIME의 변수가 5라면 , 0,5,10,0,5,10 이런 반복이 나올 것이다.
+//즉 그러니까 배열의 개수에 따른 , HashFunction 의 Prime numbe을 선택하는 것이 알맞다. 
+
+#define SIZE 13
+
+int Array[SIZE] = { NULL };// 전역변수
+
+
+int MakeHashIndex(int data) {
+
+	return data % SIZE;
+
+}
+
+int MakeHashInex2(int data) {
+
+	return 7 - (data % 7);
+}
+
+
+int add(int data) {
+	//before we need to check the array is full or not , or it will be fall into infinite loop
+	int counter = 0;
+	for (int i = 0; i < SIZE; i++) {
+		if (Array[i] != NULL) {
+
+			counter++;
+		}
+
+	}
+
+	if (counter == SIZE) {
+		return -1;
+	}
+
+	int temp = MakeHashIndex(data);
+	int i = 1;
+	while (Array[temp] != NULL) {
+
+			
+		temp = (temp +(i * MakeHashInex2(data)))%SIZE;
+			
+		i++;
+
+	}
+// Now Array[temp] is NULL
+
+	Array[temp] = data;
+
+}
+
+
+
+void delete(data) {
+	//kinda searcing concept
+	//0 부터 SIZE까지 searching을 하고 동일하다면 free.
+
+	int i = 0;
+	while (i < SIZE) {
+		if (Array[i] == data) {
+
+			Array[i] = 0;
+
+			break;
+
+		}
+		i++;
+	}
+	
+
+}
+
+
+
+void display(){
+
+	for (int i = 0; i < SIZE; i++) {
+
+		printf("%3d ", Array[i]);
+	}
+
+
+}
+
+
+
+void search(data) {
+
+
+}
+
+
+
+int main() {
+
+	add(10);
+	add(20);
+	add(30);
+	add(40);
+	add(50);
+	add(60);
+	add(70);
+	add(80);
+	add(90);
+
+	display();
+
+
+}
+
