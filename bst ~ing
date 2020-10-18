@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+//BST.
+
+/*
+어떻게 구상할 것인지 생각해보자. 
+
+1.setNode 
+
+
+*/
+
+struct Node* root = NULL;
+
+
+struct Node {
+
+	int data;
+	struct Node* left;
+	struct Node* right;
+
+};
+
+
+struct Node* CreateNode(int data) {
+
+	struct Node* NewNode = malloc(sizeof(struct Node));
+	
+	NewNode->data = data;
+	NewNode->left = NULL;
+	NewNode->right = NULL;
+
+
+	return NewNode;
+
+}
+
+int add(int data) {
+	//check root Node is NULL or not
+	if (root == NULL) {//check from the global scope through main function
+		//but root is not updated after executing the main function at first line 
+		root = CreateNode(data);
+	
+	}
+
+	else {
+
+		// do not change the root pointer! -> so I put the same pointer
+		struct Node* temp = root;
+
+		//1st case smaller -> 그리고 이렇게 하면 항상 루트 옆에만 추가가돼. 
+		if (temp->data > data) {
+			struct Node* new = CreateNode(data);
+
+			temp->left = new;
+
+		}
+
+		//2st case bigger
+		if (temp->data < data) {
+			struct Node* new = CreateNode(data);
+
+			temp->right = new;
+
+		}
+
+
+	}
+
+
+}
+
+void delete() {
+
+
+
+}
+//in recursion We need to controller can finish the infinity
+
+void inorder(struct Node *root) { // now is problem . which direction should I read first.
+
+
+	while (root != NULL) {
+		inorder(root->left);
+		printf("%3d", root->data);
+		inorder(root->right);
+	}
+
+}
+
+void search() {
+
+
+}
+
+int main() {
+	root = add(20); // void -> do not return value  -> root is pointer so it points out add(20)'s address
+	root = add(10);
+	add(30);
+	add(8);
+	add(9);
+	add(35);
+	add(28);
+	add(25);
+	inorder(root);
+}
