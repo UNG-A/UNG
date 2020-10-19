@@ -59,7 +59,7 @@ int add(int data) {
 		}
 
 		//2st case bigger
-		if (temp->data < data) {
+		if (temp->data < data) { -> 즉 내가 짠 이 코드는 데이터 값이 더 크면 , 계속해서 오른쪽으로 간다는 것이 된다 temp0>data 는 처음에 root의 데이터 일 것이고 ,업데이트 되지 않으므로
 			struct Node* new = CreateNode(data);
 
 			temp->right = new;
