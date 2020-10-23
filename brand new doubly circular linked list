@@ -1,0 +1,181 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+// doulby circular linked list
+
+
+
+struct Node {
+
+	int data;
+	struct Node* next;
+	struct Node* prev;
+};
+
+struct Node* head = NULL;
+
+struct Node* CreateNode(data) {
+	struct Node* newNode = malloc(sizeof(struct Node));
+	newNode->data = data;
+	newNode->next = NULL;
+	newNode->prev = NULL;
+}
+
+struct Node* ADD(int data) {
+	
+	if(head == NULL) {
+		head = CreateNode(data);
+		head->next = head;
+		head->prev = head;
+		return head;
+	}
+
+
+	else {
+		struct Node *temp = head;
+		struct Node* new = CreateNode(data);
+
+		while (temp->next != head) {
+			temp = temp->next;
+		}
+		// npew temp->next is head
+
+		temp->next = new;
+		head->prev = new;
+
+		new->next = head;
+		new->prev = temp;
+
+
+
+	}
+	return head;
+}
+
+
+struct Node* insert(struct Node *node,int data) {
+
+	// 매개변수 next에 insert를 하는 함수.
+
+	// 1. headInsert, lastInsert. 
+
+	struct Node* new = CreateNode(data);
+	//insert head;
+	if (node->data == head->data) {
+
+		struct Node* temp = head;
+		while (temp->next != head) {
+
+			temp = temp->next;
+
+		}
+		//now temp->next is head
+		new->next = node;
+		node->prev = new;
+
+		// now link new with last Node;
+		temp->next = new;
+		new->prev = temp;
+
+		return new; // return the new head pointer.
+
+	}
+	//insert last. ,when we use insert we have to put the paramerter, in function wtih location
+
+	else if (node->next == head) {
+		//node is the last node ;
+		struct Node* temp = head;
+
+		new->next = temp; // do not change the head pointer.
+		new->prev = node;
+
+		node->next = new;
+		temp->prev = new;
+
+		return head;
+	}
+	
+	else {
+
+		new->prev = node;
+		new->next = node->next;
+
+		node->next->prev = new;
+		node->next = new;
+
+		return head;
+	}
+	
+	
+
+	return head;//unchanged pointer.
+
+}
+
+struct Node* delete(int data) {
+	//1.searching 
+	struct Node* temp = head;
+	while (temp->data != data) {
+		temp = temp->next;
+	}
+	//now temp is temp->data== data
+
+	if (temp->data == head->data)
+	{
+		temp->next->prev = temp->prev;
+		temp->prev->next = temp->next;
+		head = head->next;
+		free(temp);
+
+	}
+
+	else if(temp->next==head){
+//delete Last Node;		
+		temp->prev->next = temp->next;
+		temp->next->prev = temp->prev;
+		free(temp);
+	}
+
+	else {
+
+		temp->prev->next = temp->next;
+		temp->next->prev = temp->prev;
+		free(temp);
+	}
+	return head;
+
+}
+void display()
+{
+	struct Node* temp = head;
+	while (temp->next != head) {
+		printf("%3d", temp->data);
+
+		temp = temp->next;
+
+	}
+	printf("%3d", temp->data);
+
+	//now temp is null
+
+}
+
+
+int main() {
+
+	head = ADD(10);
+
+	ADD(20);
+	ADD(30);
+	ADD(40);
+	head=insert(head->next, 25);
+	delete(30);
+	head = insert(head, 5);
+	head = insert(head->next, 12);
+	head = insert(head->prev, 50);
+	display();
+
+	//printf("%d", head->prev->next->data);
+}
+
