@@ -1,0 +1,79 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h> 
+#include<stdlib.h> 
+#include<string.h>
+
+
+
+int To_Lower( char* s1) {
+	// I gonna change the value so I need to use pointer
+	while (*s1 != NULL) {
+		//make the all of the element's array lower case.
+		int temp = (int)*s1;
+		if (temp < 97) {
+
+			temp =temp+32;
+			*s1 = (char)temp;//s1 -> char  value 
+		}
+		s1++;// increasing the s1 pointer so it will point next value.
+	}
+
+}
+
+int str_cmp(const char* s1, const char* s2) {
+
+	//if the two string is equal return 0; else if s1 is bigger than s2 positive number else
+	//negative number.
+	To_Lower(s1);
+	To_Lower(s2);
+	while (*s1 == *s2) { // now s1 , s2 is pointer valuable. (*s1) 문자열을 비교해야하고,
+		//while 문의 성공- > return.
+		if (*s1 == NULL) {
+			return 0;
+		}
+		s1++;//여기는 포인터를 하나 추가함으로서 ,다음 문자로 접근을해야하므로.
+		s2++;
+
+	}
+	return *s1 - *s2;
+	// we need to access the alphabet not a pointer address.
+
+
+}
+
+
+int strn_cmp(const char* s1, const char* s2, int n) {
+	// n개 까지 비교하고 , 같으면 0 다르면 , strcmp함수와 return값이 같다.
+	To_Lower(s1);
+	To_Lower(s2);
+	int i = 0;
+	while (i < n && *s1 == *s2) {
+
+		i++;
+		s1++;
+		s2++;
+
+		// i <= n 이 아니라 i<n 이다.
+	}
+	//success
+	if (i == n && *s1 == *s2) {// before I didn't put the *s1 == *s2 , -> but I should have put that code.
+
+		return 0;
+	}
+
+	else {
+		return *s1 - *s2;
+	}
+
+}
+
+
+int main() {
+	char a[] = "HELLOMYNAME";
+	char b[] = "hellomyName";
+	printf("%d", str_cmp(&a, &b, 5));
+	
+}
+
+
