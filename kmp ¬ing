@@ -1,0 +1,85 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h> 
+#include<stdlib.h> 
+#include<string.h>
+
+int Pattern_Table(char pat[]) {
+
+	/*
+	It does not work if str is pointer (sizeof returns size of pointer, usually 4 or 8) or 
+	array with specified length (sizeof will return the byte count matching specified length, which for char type are same).
+	*/
+	//number이 왜 4가 되는지 몰랐다. pat[]은 pointer로 값을 받으니까. sizeof(pat)은 pointer를 반환하는 것이다.
+	int number = strlen(pat) / sizeof(pat[0]);
+	int* Table = malloc(sizeof(int) * number);
+
+	int i = 1;
+	int j = 0;
+	int counter = 0;
+	Table[0] = 0;
+	
+	while (pat[i] != NULL) {
+		//coincide with each pattern array
+		if (pat[i] == pat[j]) {
+		
+			Table[i++] = ++counter;
+			j++;
+
+		}
+		else {
+			j = 0;
+			Table[i++] = 0;
+
+		}
+	}
+	return Table;
+}
+
+int KMP(char text[], char pat[]) {	
+
+	int* Table = Pattern_Table(pat);
+	int pt = 0;
+	int pp = 0;
+	//the loop statement.
+
+	while (text[pt] != NULL || pat[pp] != NULL) {
+		if (text[pt] == pat[pp]) {
+			pt++;
+			pp++;
+
+
+		}
+		//Table array를 참조해서 그만큼 옮긴다.
+		else {
+			//다르면 Table array 를 참조해서 -> 그 만큼 이동한다.
+			pp = Table[pp];
+			pt++;
+
+
+		}
+	}
+		if (pat[pp] == NULL)
+			return pt - 1;// the matched last of text index. -1 .마지막에 1추가가 되니까.
+		if (text[pt] == NULL)
+			return -1;
+
+	}
+
+	
+		
+
+
+
+int main() {
+	
+	char text[] = "ZABCABXACCADEF";
+	char pattern[] = "ABCABD";
+	printf("%d", KMP(&text, &pattern));
+	 /*
+	for (int i = 0; i < 6; i++) {
+		printf("%d", Table[i]);
+	}
+	*/
+
+}
