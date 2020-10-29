@@ -5,6 +5,8 @@
 #include<string.h>
 
 
+//review
+
 int	*Make_Skip(char pat[]) { // -> single pointer.
 
 	int size = strlen(pat) / sizeof(pat[0]);
@@ -50,14 +52,20 @@ int KMP(char text[], char pat[])
 			pp++;
 			pt++;
 		}
+		//bottom of line is not equal with two of arrays
 
-		else if(pp==0) {
+	
+	//	what if there is no code else if statement -> pp =4 pt =4 , and those are not matched. but. if there is no  
+
+		else if(pp==0) { //	pp와 pt가 같지 않고 pp가 0이면 , skip 테이블을 사용할 필요가없이 pt를 ++해서 , 다음 검사를 실행한다. 
 			pt++;
 		}
-		else {
-			pp = skip[pp];
+		
+			else {
+				
+				pp = skip[pp];
 
-		}
+			}
 
 	}
 
@@ -91,9 +99,9 @@ int KMP(char text[], char pat[])
 
 int main() {
 
-	char text[] = "ABCABABCABD";
+	   char text[] = "ABCAABCABD";
 	char pattern[] = "ABCABD";
-
+	//pt =4 pp =4
 
 	
 
