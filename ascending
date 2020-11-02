@@ -21,8 +21,7 @@ void Ascending(int arr[], int n) {
 	for(counter=0; counter<n-2 ;counter++) {
 
 		int	*min = &arr[counter];
-		// 시발 내가 왜 이걸 기억 못했지 , i문을 다시 시작하면 i는 다시 0으로 되잖아 ㅁㄹㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄻ ㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ 안의 loop가 끝나고 바깥 루프를 실행한 이후에.
-
+//** I  used dobule for loop , And I had a mistake .I confused when inner loop end and it will be executed again by outside loop. the inner loop var will be initialized at initial value.
 		while (i < n - 2) {
 
 			if (*min > arr[i + 1])
