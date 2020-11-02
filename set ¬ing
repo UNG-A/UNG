@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct {
+
+	int max;
+	int num;
+	int* set;
+
+}IntSet;
+
+
+int Initialize(IntSet *s,int max) {
+	// IntSet *s is already . allocated in main scope
+	s->max = max;
+	s->num = 0;
+	s->set=calloc(max ,sizeof(int));  
+
+}
+
+void Add(IntSet* s, int n) {
+	//if that is not max it could be added.
+
+	if (s->num < s->max) {
+		s->set[s->num++] = n;
+	
+	}
+	else {
+		printf("full");
+	}
+
+}
+
+void Remove(IntSet* s, int n) {
+
+	//searching -> and remove.
+
+	for (int i = 0; i < s->num; i++) {
+
+		if (s->set[i] == n) {
+			//proceed removing -> and that is not possible free the specific block
+			s->set[i] == NULL;
+		//or I can reallocating the number on that array of index
+		}
+
+	}
+	if (s->set[s->num] != n) {
+
+		printf("there isn't 'n' here");
+
+	}
+
+}
+
+
+void Assign(IntSet* s1, IntSet* s2) { // s2를 s1에 대입
+
+
+	while (s2->set[s2->num] > 0) {
+		//I gonna set the each of struct var's max var same.
+		s1->set[s1->num--] = s2->set[s2->num--];
+
+
+	}
+
+}
+
+int Equal( IntSet* s1,  IntSet* s2) {
+
+
+	while (s2->set[s2->num] > 0) {
+		//I gonna set the each of struct var's max var same.
+		if (s1->set[s1->num] == s2->set[s2->num]) {
+			s1->set[s1->num--] = s2->set[s2->num--];
+		}
+		else {
+			return -1;
+		}
+
+	}
+
+}
+
+IntSet* Union(IntSet* s1,  IntSet* s2,  IntSet* s3) {
+	//s2와 s3의 합집합을 s1에 대입
+	if (s1->max < (s2->num) + (s3->num)) {
+		printf("the capacity is not enough");
+	}
+
+	else {
+
+		while (s2->num > 0 || s3->num > 0)
+		{// F || T IS TRUE
+			//근데 애초에 오름차순으로 정리가 안되어있는데 굳이 할 필요가없구나.
+			//1. first move s2 to s1 .
+			//2. second move s3 to s1.
+			if (s2->num > 0) {
+				s1->set[s1->num++] = s2->set[s2->num--];
+			}
+			if (s3->num > 0) {
+				s1->set[s1->num++] = s3->set[s3->num--];
+			}
+		}
+
+
+}
+
+IntSet* intersection(IntSet * s1, IntSet * s2, IntSet * s3) {
+ 		//s2와 s3의 교집합 s1에 대입
+
+	}
+
+IntSet* Difference(IntSet* s1, const IntSet* s2, const IntSet* s3) {
+	//s2 -s3를 s1에 대입.
+
+}
+
+
+void print(IntSet *s) {
+
+
+
+}
