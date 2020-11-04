@@ -4,7 +4,9 @@
 
 
 		
-
+//code review how this work -> let'say Judge the number 11 is prime number or not . so . we gonna access the prime array and get the value 2 , 3 ,5 ,7 ->
+// now is point. I gonna check only square number smaller than 11. because. if 4, 9 ( 5*5 is already bigger . so no need to check) -> is not prime number .so we can check with
+// only two variable. 4, 9 -> if 11 was diveded 4, 9 -> it will be devided 2, 3 as well. so this is the solution. don't check, no need to check.
 
 
 
