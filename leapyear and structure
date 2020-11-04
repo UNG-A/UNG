@@ -36,7 +36,8 @@ Date DateOf(int y, int m, int d) {
 
 	return s;
 }
-//before 같은 경우는 x.d -n <=0 경우에 . m을 하나 감소시켜주고 , x.d + x,m(감소시킨 m) - n <그냥 뺄셈의 빌려주기>
+//structure function "before" is just decending the month if n will be under the 0 and calculating after plus that month days at days. 
+// now subtraction "n" could be positive number
 Date Before(Date x, int n) {
 
 	x.y = 2020;
