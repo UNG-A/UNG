@@ -1,0 +1,86 @@
+#include<stdio.h> 
+#include<stdlib.h> 
+#include <string.h>
+
+//leap year.
+
+int mdays[][12] = {
+{31,28,31,30,31,30,31,31,30,31,30,31},// or not
+{31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31} //leap
+};
+
+int isLeapYear(int year) {
+
+	if (year % 4 == 0 && year % 100 == 0 && year % 400 == 0)
+		return 1;
+	else
+		return 0;
+
+
+}
+
+typedef struct {
+
+	int y;
+	int m;
+	int d;
+
+}Date;
+
+Date DateOf(int y, int m, int d) {
+
+	Date s;
+	s.y = y;
+	s.m = m;
+	s.d = d;
+
+	return s;
+}
+//before 같은 경우는 x.d -n <=0 경우에 . m을 하나 감소시켜주고 , x.d + x,m(감소시킨 m) - n <그냥 뺄셈의 빌려주기>
+Date Before(Date x, int n) {
+
+	x.y = 2020;
+	x.m = 10;
+	x.d = 5;
+
+	if (x.d - n <=0) {
+		--x.m;
+		x.d = x.d + mdays[isLeapYear(x.y)][x.m-1] - n;
+	}
+	else {
+
+		x.d -= n;
+	}
+	return x; 
+}
+
+
+int Day_Count(int year, int month, int day) {
+
+	year = isLeapYear(year);
+
+	int days = 0;
+	int i = 1;
+	while (i < month) {// the thing is That month as I gave the parameter. is not ended yet. so calculating til last month and +days
+
+		days += mdays[year][i];
+		i++;
+	}
+	return days + day;
+
+
+}
+
+
+
+
+int main() {
+	//printf("%d", Day_Count(2020, 11, 5));
+
+
+	Date a = DateOf(2020, 11, 5);
+	//printf("%d", a.y);
+	
+	Date b = Before(a, 10);
+	printf("%2d %2d %2d", b.y, b.m, b.d);
+}
