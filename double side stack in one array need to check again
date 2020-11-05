@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//stack.
+//doubly side of stack in one stack array -> specification
+//1. this is not patitioned. it menas stack A capacity is not max/2 ;
+//2. it can be easily added or pop for each side of stack.
 
 //1. initializing.
 //2 .push
