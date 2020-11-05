@@ -1,0 +1,117 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//stack.
+
+//1. initializing.
+//2 .push
+//3. pop
+//4.peek.
+//5.search
+//6.isFull
+//7.isEmpty
+//8.print
+
+
+typedef struct {
+
+	int ptr;
+	int max;
+	int* stk; // stack pointer. 
+
+}stack;
+
+stack* initializing(int max) {//return structure pointer.
+	stack* s = malloc(sizeof(stack));
+	s->max = max;
+	s->ptr = 0;
+	s->stk = (struct stack*)malloc(sizeof(int) * max);
+
+	return s;
+}
+
+int isFull(stack* s) {
+		
+	if (s->max <= s->ptr)
+		return -1;
+
+
+}
+
+int isEmpty(stack* s) {
+	if (s->ptr <= 0)
+		return -1;
+
+}
+
+int push(stack* s, int n) {
+
+	if (isFull(s) == -1) {
+		return -1;
+	}
+	else {
+
+		s->stk[s->ptr++] = n;
+
+	}
+}
+
+int search(stack* s, int n)
+{
+	int i;
+	for (i = 0; i < s->ptr; i++) {
+
+		if (s->stk[i] == n) {
+			printf("%d th in the stack", i);
+			return i;
+
+		}
+	}
+	if (s->stk[i] == n) {
+		printf("fail to search");
+	}// at the last of loop -> i will be s->ptr ; if s->stk[i] is not n , that is fail to search.
+}
+int pop(stack* s,int *x) {
+
+	if (isEmpty(s) == -1)
+		return -1;
+	else {
+		// *n =  < means -> access the physical address and give the value.>
+		 *x = s->stk[s->ptr--];
+		//pop다시.
+		return x;
+	}
+	
+}
+
+void print_all(stack* s) {
+
+	int i;
+	for (int i = 0; i < s->ptr; i++) {
+
+		printf("%3d", s->stk[i]);
+	}
+
+}
+
+
+
+
+
+
+int main() {
+	int* x = malloc(sizeof(int)); // 
+	stack* s = initializing(10);
+	push(s,10);
+	push(s, 20);
+	push(s, 30);
+	push(s, 40);
+	push(s, 50);
+	//search(s, 20);
+	pop(s,x);
+	print_all(s);
+
+	//printf("%p", x);
+
+
+}
