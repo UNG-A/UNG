@@ -30,8 +30,18 @@ stack* initializing(int max) {//return structure pointer.
 	return s;
 }
 
+stack* initializing2(stack* s) {
+
+	stack* s1 = malloc(sizeof(stack));
+
+	s1->stk = s->stk;
+	s1->ptr = s->max-1;
+	s1->max = 0;
+
+	return s1;
+}
 int isFull(stack* s) {
-		
+
 	if (s->max <= s->ptr)
 		return -1;
 
@@ -44,9 +54,9 @@ int isEmpty(stack* s) {
 
 }
 
-int push(stack* s, int n) {
+int push(stack* s,stack *s1, int n) {
 
-	if (isFull(s) == -1) {
+	if (isFull(s) == -1 || s->ptr > s1->ptr) { // for blocking reallocating for each other , and I gave priority. push (orignial not including > = instead of >)
 		return -1;
 	}
 	else {
@@ -55,6 +65,26 @@ int push(stack* s, int n) {
 
 	}
 }
+
+int push2(stack* s1, stack *s, int n) {
+
+	if (isFull(s) == -1 || s1->ptr <= s->ptr)
+
+		return -1;
+
+	else {
+		s1->stk[(s1->ptr)--
+		
+		
+		
+		
+		
+		
+		] = n; //ptr is number 10 . so I need set ptr =9 ; 
+	}
+
+}
+
 
 int search(stack* s, int n)
 {
@@ -71,25 +101,34 @@ int search(stack* s, int n)
 		printf("fail to search");
 	}// at the last of loop -> i will be s->ptr ; if s->stk[i] is not n , that is fail to search.
 }
-int pop(stack* s,int *x) {
+int pop(stack* s) {
 
 	if (isEmpty(s) == -1)
 		return -1;
 	else {
 		// *n =  < means -> access the physical address and give the value.>
-		 *x = s->stk[s->ptr--];
+		s->stk[--s->ptr]=NULL;
 		//pop다시.
-		return x;
+		
 	}
-	
+
+}
+
+int pop2(stack* s1, stack* s) {
+
+	if (s1->ptr >= s->max) // nothing stack in the second stack
+		return -1;
+	else {
+		s1->stk[++(s1->ptr)]=NULL; // I had minus s->ptr pointer. need to fix it
+	}
 }
 
 void print_all(stack* s) {
 
 	int i;
-	for (int i = 0; i < s->ptr; i++) {
+	for (int i = 0; i < s->max; i++) {
 
-		printf("%3d", s->stk[i]);
+		printf("%4d", s->stk[i]);
 	}
 
 }
@@ -102,13 +141,22 @@ void print_all(stack* s) {
 int main() {
 	int* x = malloc(sizeof(int)); // 
 	stack* s = initializing(10);
-	push(s,10);
-	push(s, 20);
-	push(s, 30);
-	push(s, 40);
-	push(s, 50);
-	//search(s, 20);
-	pop(s,x);
+	stack* s1 = initializing2(s);
+	push(s,s1, 10);
+	push(s,s1, 20);
+	push(s,s1, 30);
+	push(s,s1, 40);
+	push2(s1, s, 100);
+	push2(s1, s, 90);
+	push2(s1, s, 80);
+	push2(s1, s, 70);
+	push2(s1, s, 60);
+	push(s,s1, 50);
+	push2(s1, s, 550);
+	pop2(s1, s);
+	pop(s, x);
+	//push(s, s1, 200);
+
 	print_all(s);
 
 	//printf("%p", x);
