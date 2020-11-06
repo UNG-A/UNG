@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+void swap(int* a, int* b) {
+
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+
+void selection_sort(int arr[], int n) {
+
+	//find the min value from 0 to n-1 -> arr[0]=min
+	//find the min value from 1 to n-1 -> arr[1] = min
+
+	int i;
+	int j;
+	int* min = &arr[n - 1];
+
+	for (i = 0; i < n; i++)
+	{
+
+		for (j = n - 1; j > i; j--) {
+
+			if (*min > arr[j - 1]) {
+				min = &arr[j - 1];
+			}
+			
+		}
+		swap(&arr[i], min);
+	}
+}
+
+void print(int arr[],int n) {
+
+	int i;
+	for (i = 0; i < n; i++) {
+
+		printf("%3d", arr[i]);
+	}
+}
+
+int main() {
+
+	int arr[7] = { 6,4,8,3,1,9,7 };
+	selection_sort(arr, 7);
+	print(arr, 7);
+	
+}
