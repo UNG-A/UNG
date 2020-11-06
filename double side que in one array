@@ -1,0 +1,171 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+//que
+/*
+0.initializing
+1.inque
+2.deque
+3.peek
+4.isempty
+5.isfull
+6.print
+
+*/
+//typedef struct vs struct  -> If I use typedef -> it makes as a type alias . so I can use globally . so no need to put the struct front of code
+
+typedef struct{
+
+	int max;
+	int front;
+	int rear;
+	int* buffer;
+
+}que;
+
+que* initializing2(que *s,int max) {
+	que* s1 = malloc(sizeof(que));
+	 s1->max = max;
+	s1-> front = max;
+	s1-> rear = max;
+	s1->buffer = s->buffer;
+	
+
+	return s1;
+}
+ 
+ que *initializing(int max) {
+
+	que* s =malloc(sizeof(que));
+	s->max = max;
+	s->front = 0;
+	s->rear = 0;
+	s->buffer = calloc(max, sizeof(int));
+
+
+	return s;
+}
+
+ int isFull(que* s, que* s1) { //even if s->rear == max -> it could not be full because when dequing front index is increased . and make thaht index NULL.
+
+	 if (s->front == 0 && s->rear == 0 && s1->rear >= 0) {
+		 return 1;
+
+	 }
+	 if (s1->front == s1->max && s1->rear == s1->max && s->rear <= s->max) {
+		 return 1;
+	 }
+
+	 else if (s->front == s->rear || s1->front == s1->rear) {
+		 return -1;
+	 }
+	 else if (s->rear > s1->rear || s1->rear < s->rear)
+	 {
+		 return -1;
+	 }
+	 
+ }
+int isEmpty(que* s) {
+
+	if (s->front == s->rear)
+		return -1;
+
+
+}
+int isEmpty1(que* s1) {
+
+	if (s1->front == s1->rear)
+		return -1;
+}
+
+
+ int inque(que *s,que *s1,int n ) {
+
+	 if (isFull(s, s1) == -1)
+		 return -1;
+	 else {
+
+		 s->buffer[s->rear++] = n;
+	 }
+
+}
+ void inque2(que* s, que* s1, int n) {
+	 if (isFull(s, s1) == -1)
+		 return -1;
+	 else {
+
+		 s1->buffer[s1->rear--] = n;
+	 }
+
+
+
+ }
+
+ void deque(que* s) {
+
+	 if (isEmpty(s) == -1)
+		 printf("fail");
+	 else {
+
+		 s->buffer[s->front++] = NULL;
+
+	 }
+ }
+
+ void deque2(que* s1) {
+
+	 if (isEmpty1(s1) == -1)
+		 return -1;
+	 else {
+		 s1->buffer[s1->front--] = NULL;
+	 }
+
+ }
+
+ int peek(que* s) {
+
+	 int n = s->buffer[s->front];
+
+	 return n;
+
+ }
+
+ void print(que* s) {
+	 int i = 0;
+	 while ( i <= s->max) {
+
+		 printf("%4d", s->buffer[i]);
+		 i++;
+
+	 }
+
+ }
+
+
+
+ int main() {
+
+	 que* s = initializing(10);
+	 que* s1 = initializing2(s,10);
+	 inque(s,s1, 10);
+	 inque(s, s1,20);
+	 inque(s, s1,30);
+	 inque(s, s1,40);
+	 inque(s, s1, 50);
+	 inque(s, s1, 60);
+	 inque(s, s1, 70);
+	 inque(s, s1, 80);
+	inque(s, s1, 85);
+	 inque2(s, s1, 100);
+	 inque2(s, s1, 90);
+	 inque2(s, s1, 83); // this is not work. because of the isFull function.
+	 deque(s);
+	 deque(s1);
+	 print(s);
+	
+
+
+ }
+
+ //there is take I need to start point of s1 -> max -1 . in that result  . array index is from 0 to 10 . ->total  number 11.
