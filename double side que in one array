@@ -168,4 +168,4 @@ int isEmpty1(que* s1) {
 
  }
 
- //there is take I need to start point of s1 -> max -1 . in that result  . array index is from 0 to 10 . ->total  number 11.
+ //there is mistake I need to start point of s1 -> max -1 . in that result  . array index is from 0 to 10 . ->total  number 11.
