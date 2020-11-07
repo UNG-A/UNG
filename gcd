@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+
+/*
+I am curious about . when I se the value gcd(22,8)
+
+
+(22,8) -> (8,6) stacked. -> (6,2) stacked , ->(2,0) ->return 2;
+
+now (6,2) , (8,6) is not popped. how could this function result 2?
+
+
+
+I got the new info -> even if there are not popped from the stack . when the value is returned.
+regardless of the rest of stacks . it will be terminated.
+
+
+there is difference beteween gcd and factorial.
+
+in factorial code , when the stack could be stacked again via popped stack. but gcd is not . cuz of else statement.
+
+*/
+int gcd(int x , int y) {
+
+	if (y == 0)
+		return x;
+	else // this is the key . -> if is True so . it just return the x, not checking the else statement.
+	{
+		return gcd(y, x % y);
+	}
+
+}
+
+int main() {
+
+	printf("%d", gcd(22, 8));
+}
