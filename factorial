@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+//coidng the factorial function into recursion.
+
+int factorial(int n) {
+
+
+/*
+	here is pointer when using recursion all of the local varialbe will be stacked as well .
+	so sum will be initialized 0 for every single stack call
+	and . when the recursion is end(all of the recursion is stacked. next of code will be executed.
+	why while(n>1) makes infinte loop? because local variable was stacked as mentioned. so prob , when 2nd stack is called n is 1 and condition is rihgt , 
+	it wil be stacked again and will be called again -> so infinite loop
+	
+		*/
+	if (n > 0) {
+		return n * factorial(n - 1);
+
+	}
+	else
+		return 1;
+
+	
+	
+}
+
+
+int main() {
+	printf("%d", factorial(4));
+}
