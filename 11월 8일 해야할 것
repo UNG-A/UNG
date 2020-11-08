@@ -22,6 +22,9 @@ typedef struct {
 	int ptr;
 	int max;
 	int* stk;
+	char* a;
+	char* b; 
+	char* c;
 
 }stk;
 
@@ -31,18 +34,24 @@ struct stk* Initializing(int max) {
 	s->max = max;
 	s->ptr = 0;
 	s->stk = calloc(s->max, sizeof(int));
-
+	s->a = calloc(s->max, sizeof(char));
+	s->b= calloc(s->max, sizeof(char));
+	s->c= calloc(s->max, sizeof(char));
 }
 
 void push(stk* s,int n,char a, char b, char c) {
-
-
-
+	s->stk[s->ptr++] = n;
+	s->a[] = a;//counter 추가해주기.
+	s->b[] = b;
+	s->c[] = c;
+	
+	//char *a , 에는 a넣고 b에는 b넣고 이렇게 한 다음에 , 입력값을 줄 떄 push에서 다르게  주면된다.
 }
 
 int isEmpty(stk *s) {
 
-
+	if (s->stk[s->ptr] == 0)
+		return -1;
 
 }
 
