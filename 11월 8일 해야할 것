@@ -1,0 +1,101 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//pop 함수 구현
+
+/*
+
+void pop(int n ,char a, char b, char c){
+
+s->stk[s->ptr--];
+
+printf(" %d , %c to %c , n, a, c);
+
+
+}
+
+*/
+// 해냈다 맞는지 확인해보자
+
+// ************* Q 스텍에 어떻게 -> N과 A,B,C,를 동시에넣지? CHAR 배열을 3개 더 만들면 되겠구나.
+typedef struct {
+	int ptr;
+	int max;
+	int* stk;
+
+}stk;
+
+struct stk* Initializing(int max) {
+
+	stk* s = malloc(sizeof(stk));
+	s->max = max;
+	s->ptr = 0;
+	s->stk = calloc(s->max, sizeof(int));
+
+}
+
+void push(stk* s,int n,char a, char b, char c) {
+
+
+
+}
+
+int isEmpty(stk *s) {
+
+
+
+}
+
+void pop ()
+
+void hanoi_non_recursion(int n, char a, char b, char c) {
+	First:
+	if (n > 1) {
+		push(n-1, a, c, b);
+		goto First;
+	}
+	 // 
+	//now is (3,a,b,c) 2(a,c,b) 1(a,b,c) is pushed .
+
+	while (isEmpty != -1) { //it that is not empty
+
+		pop(n, a, b, c);
+
+	}
+		if (n > 1) {
+			push(n - 1, b, a, c);
+		}
+	
+	goto First;
+}
+
+//non -recursion
+int factorial(int n){
+
+	int i;
+	int sum = 1;
+	for (i = n; i > 0; i--) {
+
+		sum *= i;
+
+	}
+	return sum;
+
+}
+
+int gcd(int x,int y) {
+
+	while (y != 0) {
+		int temp = y;
+		y = x%y;
+		x = temp;// y가 0이 되더라도 x도 0이된다.
+
+
+	}
+	return x;
+}
+
+
+int main() {
+	
+}
