@@ -1,0 +1,84 @@
+//하노이탑 비재귀 스택을 이용한 것 다시풀고 , // 지금 이 문제 binary search를 이용한 문제 다시 풀기 binary search는 pr이 -1이 돼서 문제가 됐다 . 초기 condition에 문제가생김.
+
+
+include <stdio.h>
+#include <stdio.h>
+
+
+//straight insertion
+
+void swap(int* a, int* b) {
+
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+
+}
+
+int binary_search_NO_key(int a[], int n,int key) {
+
+	int pl = 0;
+	int pr = n - 1;
+	while (pl <= pr) {
+		int pm = (pl + pr) / 2;
+
+		if (a[pm] == key) {
+			return pm; // move all of the index from pm to the end.
+
+		}
+		else if (a[pm] > key) {
+
+			pr = pm - 1;
+		}
+		else {
+
+			pl = pm + 1;
+		}
+	}
+	// if a[pm] is not equal. now is two case.
+
+	if (a[(pl + pr) / 2] < key)
+		return pl; // because the terminate condition is. when pl<=pr -> this means eventaully pl wii be more bigeer.
+
+	else
+		return pr;
+
+
+}
+
+
+void straight_insertion(int a[], int n) {
+
+
+
+	int i;
+	int j;
+	for (int i = 1; i < n; i++) {
+		
+			int tempvalue = a[i];
+			int temp = binary_search_NO_key(a, i, a[i]);// now get the index. but move to the index from return index
+			for (j = temp; j < n-1; i++) {
+				a[j + 1] = a[j];
+			}
+			a[temp] = tempvalue;
+
+	}
+
+
+}
+
+void print(int arr[], int n) {
+
+	int i;
+	for (i = 0; i < n; i++) {
+		printf("%3d", arr[i]);
+	}
+}
+
+int main() {
+
+
+	int arr[7] = { 6,4,1,7,3,9,8 };
+	straight_insertion(arr, 7);
+	print(arr, 7);
+}
