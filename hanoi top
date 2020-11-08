@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* I got the first recursion easily but second is not . becuase I put the parameter , from by to , it makes confuse so I set the A ,B ,C and that makes
+more understand easily*/
+
+//backtracking. here is point. let's see 1, c->b this is the result That I want to show. -> and this code should be made via second recursion.
+// -> now we can get the 2nd recursion code . how should we code for showing 1,c->b?->	 1(C,A,B) ->and input parameter is (2,A,C,B) -> so . A ,C is swap
+//- > this mean the first parameter , and 2nd parameter are swapped -> so result is hanoi(n-1, B,A,C) 
+void hanoi(int n, char A, char B, char C) {
+
+	if (n > 1) {
+		hanoi(n - 1, A, C, B);
+	}
+
+	printf("%d , %c to %c\n", n, A, C);//(second paragraph) so one time of print function will be right. because if(n>1) does not qualifed so print function will be executed.
+
+	if (n > 1) {
+
+		hanoi(n - 1, B, A, C);
+
+	}
+	//(first paragraph)I put the printf again here  . but there was wrong .beacause when the push is ended, print function will be executed twice (the second if statement doest not qualified)
+
+}
+ 
+
+int main() {
+	
+	int n = 3;
+	char A = 'a';
+	char B = 'b';
+	char C = 'c';
+
+	hanoi(3, A, B, C);
+}
