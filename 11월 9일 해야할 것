@@ -1,7 +1,4 @@
-//하노이탑 비재귀 스택을 이용한 것 다시풀고 , // 지금 이 문제 binary search를 이용한 문제 다시 풀기 binary search는 pr이 -1이 돼서 문제가 됐다 . 초기 condition에 문제가생김.
-
-
-include <stdio.h>
+#include <stdio.h>
 #include <stdio.h>
 
 
@@ -15,10 +12,10 @@ void swap(int* a, int* b) {
 
 }
 
-int binary_search_NO_key(int a[], int n,int key) {
+int binary_search_NO_key(int a[], int n, int key) {
 
 	int pl = 0;
-	int pr = n - 1;
+	int pr = n;
 	while (pl <= pr) {
 		int pm = (pl + pr) / 2;
 
@@ -26,7 +23,11 @@ int binary_search_NO_key(int a[], int n,int key) {
 			return pm; // move all of the index from pm to the end.
 
 		}
-		else if (a[pm] > key) {
+		else if (pm==0 && pl==0) {
+
+			return 0;
+		}
+		else if(a[pm] > key) {
 
 			pr = pm - 1;
 		}
@@ -48,22 +49,22 @@ int binary_search_NO_key(int a[], int n,int key) {
 
 
 void straight_insertion(int a[], int n) {
-
-
-
 	int i;
 	int j;
-	for (int i = 1; i < n; i++) {
-		
-			int tempvalue = a[i];
-			int temp = binary_search_NO_key(a, i, a[i]);// now get the index. but move to the index from return index
-			for (j = temp; j < n-1; i++) {
-				a[j + 1] = a[j];
-			}
-			a[temp] = tempvalue;
+
+	for (i = 1; i < n; i++) {
+		int tempvalue = a[i];
+		int temp = binary_search_NO_key(a, i, a[i]);// now get the index. but move to the index from return index
+		a[temp] = tempvalue;
+		a[i] == NULL;
+		for (j = temp+1; j < n - 2; j++) {
+			a[j] = a[j];
+
+		}
+			
+
 
 	}
-
 
 }
 
@@ -78,7 +79,7 @@ void print(int arr[], int n) {
 int main() {
 
 
-	int arr[7] = { 6,4,1,7,3,9,8 };
-	straight_insertion(arr, 7);
-	print(arr, 7);
+	int arr[8] = { 6,4,1,7,3,9,8,NULL};
+	straight_insertion(arr, 8);
+	print(arr, 8);
 }
