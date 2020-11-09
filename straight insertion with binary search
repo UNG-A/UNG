@@ -13,7 +13,7 @@ void swap(int* a, int* b) {
 }
 
 int binary_search_NO_key(int a[], int n, int key) {
-
+	//this is not for matched value about key. finding a adequate index for inserting in it.
 	int pl = 0;
 	int pr = n - 1;
 	while (pl <= pr) {
@@ -26,7 +26,7 @@ int binary_search_NO_key(int a[], int n, int key) {
 		else if (a[pm] > key) {
 			
 			pr = pm - 1;
-			if (pr == -1)
+			if (pr == -1)// this is for initial index. when pl =0 , pr =1 -> pm=0,  this means when key is more smaller tham arr[pm] -> pr gonna be -1. (-1 does not exist) 
 				return 0;
 		}
 		else {
@@ -37,7 +37,7 @@ int binary_search_NO_key(int a[], int n, int key) {
 	// if a[pm] is not equal. now is two case.
 
 	if (a[(pl + pr) / 2] < key)
-		return pl; // because the terminate condition is. when pl<=pr -> this means eventaully pl wii be more bigeer.
+		return pl; // because the terminate condition is.  pl<=pr -> this means eventaully pl wii be more bigger than pr.
 
 	else
 		return pr;
