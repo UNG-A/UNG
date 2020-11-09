@@ -56,7 +56,7 @@ void straight_insertion(int a[], int n) {
 
 		int var = a[i];
 		int temp = binary_search_NO_key(a, i, a[i]);// index
-		for (j = i; j > temp; j--) {
+		for (j = i; j > temp; j--) { // this is difficult part for me  , moving index. 
 			a[j] = a[j-1];
 		}
 		a[temp] = var;
