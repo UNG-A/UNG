@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdio.h>
+
+
+//straight insertion with binary search -> I Make it!
+
+void swap(int* a, int* b) {
+
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+
+}
+
+int binary_search_NO_key(int a[], int n, int key) {
+
+	int pl = 0;
+	int pr = n - 1;
+	while (pl <= pr) {
+		int pm = (pl + pr) / 2;
+
+		if (a[pm] == key) {
+			return pm; // move all of the index from pm to the end.
+
+		}
+		else if (a[pm] > key) {
+			
+			pr = pm - 1;
+			if (pr == -1)
+				return 0;
+		}
+		else {
+
+			pl = pm + 1;
+		}
+	}
+	// if a[pm] is not equal. now is two case.
+
+	if (a[(pl + pr) / 2] < key)
+		return pl; // because the terminate condition is. when pl<=pr -> this means eventaully pl wii be more bigeer.
+
+	else
+		return pr;
+
+
+}
+
+
+void straight_insertion(int a[], int n) {
+
+
+
+	int i;
+	int j;
+	for (int i = 1; i < n; i++) {
+
+		int var = a[i];
+		int temp = binary_search_NO_key(a, i, a[i]);// index
+		for (j = i; j > temp; j--) {
+			a[j] = a[j-1];
+		}
+		a[temp] = var;
+
+	}
+	
+
+}
+
+void print(int arr[], int n) {
+
+	int i;
+	for (i = 0; i < n; i++) {
+		printf("%3d", arr[i]);
+	}
+}
+
+int main() {
+
+
+	int arr[7] = { 6,4,1,7,3,9,8 };
+	straight_insertion(arr, 7);
+	print(arr, 7);
+}
