@@ -1,2 +1,0 @@
-# UNG
-quick_sort
