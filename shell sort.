@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include<stdlib.h>
 
+//note in my ebook -> if I set the h=1,4,13,40 will be more effcient. because those of numbers does not check the same index twice or more. so Set the first H = one of those numbers.
+//and h/=3 will be make one of those number as well.
+
 // I got the error -> I thought triple for loop is not efficient. that point makes me can't make the code. 
 // And I got the hint .even If I use triple loop . time complexcity is not n^3. because . time complexcity is not multiplication . n , n^2 --> n^2.
 // and this is straight insertion variation. if almost arranged straight insertion is efficent . if not , that isn't efficent. so shell sort was made from this idea.
