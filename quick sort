@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdio.h>
+
+
+void swap(int* a, int* b) {
+
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+void quick_sort(int a[], int left, int right) {
+	int pl = left;
+	int pr = right;
+
+	int pm = (pl + pr) / 2;
+
+	// (>= vs >) think when 1 ,3, 2 , pl gonna be 2.a[pl]= 2, and a[pr]=1, it won't be swapped , and that result , that I expected.
+	// > = makes the pl , or pr stopped at pm because when increasing the pl , and decreasing the pr , those number could be pm. if not set that condition (> =)  pl or pr , gonna pass the pm , **or more(this is the point), it will continusouly find it. because the outer loop(while (pl<=pr) is already executed.
+	//and when finished if statemnent then checking the pl <= pr statemnt.
+
+	while (pl <= pr) {
+		
+		while (a[pm] > a[pl])  pl++; 
+		while (a[pm] < a[pr])pr--;
+		if (pr >= pl) {
+
+			swap(&a[pl++], &a[pr--]);// and this code could be the point when pl == pr == pm , pl should be +1 ,and pr -1 => pr>=pl's condition met in condition so .it will be pl+=1; pr-=1;
+		
+		}
+	}
+	if (pr > left)
+		quick_sort(a, left, pr);
+	if (pl < right)
+		quick_sort(a, pl, right);
+
+}
+]
+
+
+
+
+void print(int arr[], int n) {
+
+
+	int i;
+	for (i = 0; i < n; i++) {
+		printf("%3d", arr[i]);
+	}
+
+}
+int main() {
+
+
+	int arr[9] = { 5,8,4,2,6,1,3,9,7};
+	quick_sort(arr, 0,8);
+	print(arr, 9);
+}
