@@ -9,7 +9,7 @@ typedef struct {
 	int* arr;
 }stk;
 
-	stk *initializing(int max) {
+stk* initializing(int max) {
 
 	stk* s = malloc(sizeof(stk));
 	s->ptr = 0;
@@ -20,12 +20,11 @@ typedef struct {
 	return s;
 }
 
+
 int Is_Empty(stk* s) {
 
-	if (s->ptr < 0) {
+	if (s->ptr <= 0)
 		return -1;
-	}
-
 }
 
 int isFull(stk* s) {
@@ -39,7 +38,7 @@ int push(stk* s, int n) {
 	if (isFull != -1) {
 
 		s->arr[s->ptr++] = n;
-
+		return n;
 	}
 	else {
 		printf("fail");
@@ -47,13 +46,16 @@ int push(stk* s, int n) {
 	}
 }
 
-int pop(stk* s) {
-	int return_value = 0;
-	if (Is_Empty != -1) {
 
-		s->arr[s->ptr-1] = return_value;
-		s->ptr--;
-		return return_value;
+
+int pop(stk* s) {
+	int new = 0;
+	if (Is_Empty != -1) { // in my code when ptr ==0 . it is empty
+
+	new = s->arr[--s->ptr] ; // I got the mistake I put the new var at the behind of s->ptr
+
+	return new;
+
 	}
 	else {
 		printf("fail");
@@ -91,7 +93,16 @@ void non_recursive_hanoi(int n, int from, int by, int to) {
 
 		//build the recursive pop
 
-		while (Is_Empty != -1) {
+		if(Is_Empty(s) != -1) {//Not while -> if (if I use while when n==2 it can recur the (1,by,from,to) // It takes 30mins , cuz I didn't check the empty function parameter,.
+
+
+
+
+
+
+
+
+
 			n = pop(s);
 			from = pop(s);
 			by = pop(s);
@@ -105,7 +116,9 @@ void non_recursive_hanoi(int n, int from, int by, int to) {
 			by = pop(s);
 
 		}
-
+		else {
+			break;
+		}
 
 
 	}
