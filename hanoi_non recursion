@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include<stdlib.h>
+//Hanoi non_recursion
+
+typedef struct {
+
+	int ptr;
+	int max;
+	int* arr;
+}stk;
+
+	stk *initializing(int max) {
+
+	stk* s = malloc(sizeof(stk));
+	s->ptr = 0;
+	s->max = max;
+	s->arr = calloc(max, sizeof(int));
+
+
+	return s;
+}
+
+int Is_Empty(stk* s) {
+
+	if (s->ptr < 0) {
+		return -1;
+	}
+
+}
+
+int isFull(stk* s) {
+
+	if (s->ptr <= s->max)
+		return -1;
+
+}
+
+int push(stk* s, int n) {
+	if (isFull != -1) {
+
+		s->arr[s->ptr++] = n;
+
+	}
+	else {
+		printf("fail");
+		return -1;
+	}
+}
+
+int pop(stk* s) {
+	int return_value = 0;
+	if (Is_Empty != -1) {
+
+		s->arr[s->ptr-1] = return_value;
+		s->ptr--;
+		return return_value;
+	}
+	else {
+		printf("fail");
+		return -1;
+	}
+}
+void move(int n, int from, int to) {
+
+	printf("%d , %d to %d\n", n, from, to);
+}
+
+//non-recursive hanoi top.
+
+void non_recursive_hanoi(int n, int from, int by, int to) {
+
+	stk* s = malloc(sizeof(stk));
+	s = initializing(100);
+
+	while (1) {
+
+		while (n > 1) {
+			push(s, to);
+			push(s, by);
+			push(s, from);
+			push(s, n);
+			n--;
+
+			push(s, to);
+			to = by;
+			by = pop(s);
+			//it does not push (1 , A,B,C) just change the b -> c , c->b , and print it . and it works.
+		}
+
+		move(n, from, to);
+
+		//build the recursive pop
+
+		while (Is_Empty != -1) {
+			n = pop(s);
+			from = pop(s);
+			by = pop(s);
+			to = pop(s);
+
+			move(n, from, to);
+
+			n--;
+			push(s, from);
+			from = by;
+			by = pop(s);
+
+		}
+
+
+
+	}
+
+
+
+}
+
+
+
+
+
+
+int main() {
+	non_recursive_hanoi(3, 1, 2, 3);
+}
