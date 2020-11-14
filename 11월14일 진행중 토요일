@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+int flag[4];
+int pos[4];
+
+
+void print(void) {
+
+
+	int i;
+	for (i = 0; i < 4; i++) {
+		printf("%2d", pos[i]);
+	}
+	printf("\n");
+}
+
+
+void set(int i) {
+
+	int j;
+	for (j = 0; j < 4; j++) {
+		if (!flag[j]) {
+			pos[i] = j;
+			if (i == 3)
+				print();
+			else {
+				flag[j] = 1; //시111111111111발 왜 인지 알아냈다 . 왜냐하면 , print만 진행한거지 flag[j] =1은 실행하지도 않았다. 
+				set(i + 1);
+				flag[j] = 0;
+			}
+		}
+	}
+}
+
+
+
+int main() {
+
+	int i;
+
+	for (i = 0; i < 4; i++) {
+		flag[i] = 0;
+
+	}
+
+	set(0);
+}
