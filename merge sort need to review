@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+void merge_sort(int a[], int n,int max) {
+
+	int* f = calloc(max + 1, sizeof(int)); // max value +1 , cuz 	Cumulative frequency distribution table's index will be maximum value +1	
+	int* b = calloc(n, sizeof(int));
+
+	int i;
+	for (i = 0; i < n; i++) f[a[i]]++; //make frequency distribution table
+	for (i = 1; i < max + 1; i++) f[i] += f[i - 1];//cumulative frequency distribution table.
+	for (i = n - 1; i >= 0; i--) b[--f[a[i]]] = a[i];
+	for (i = 0; i < n; i++)a[i] = b[i];
+	// I need to understand about this code 
+	/*
+	example f[3] =5 means the number of a[0] ~a[3] is 5
+	so if f[2] =3 , there are two of "3" in the array.
+	so need to put the "3" orderly. the prior number should be 
+	prior index. so loop var i should be n-1
+
+	
+	
+	*/
+
+	free(b);
+	free(f);
+
+	/*
+	
+	1.the part of that I had mistake => put the b[f[a[i]]--] I should have used prefix decremnent operator.
+	2. in the same line of code at first mistake . I put the i>0 so , it will execute til a[1] . instead put the i>=0.
+	*/
+
+
+}
+
+void print(int arr[], int n) {
+	int i;
+	for (i = 0; i < n; i++) {
+
+		printf("%4d", arr[i]);
+	}
+}
+
+int main() {
+
+
+	int arr[7] = { 22,5,11,32,98,68,70 };
+	merge_sort(arr, 7, 98);
+	print(arr, 7);
+}
