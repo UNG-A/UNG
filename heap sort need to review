@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+void swap(int* a, int* b) {
+
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+
+}
+
+void making_heap(int a[], int n,int i) {
+	
+	int parent = i;
+	int left=parent*2+1;
+	int right = left+1;
+
+	//while (parent * 2 + 1 < n && parent * 2 + 2 < n) {//left and right . *caution * if the root is not smaller than child it will be caught inifinte loop.
+
+	
+		if (left <n &&a[parent] < a[left])
+		{
+			parent = left;
+
+		}
+		if (right <n && a[parent] < a[right]) {
+			parent = right;
+		}
+		// so now the largest one is parent . (among parent , left and right).
+		if (a[parent] != a[i]){
+			swap(&a[i], &a[parent]);
+		making_heap(a, n, parent);// while loop cause infinite loop because root is not small than child otherwise the recursion condition does not make infinite loop
+
+	}
+
+}
+
+
+void call_heap_sort(int a[],int n) {
+	int i;
+	for (i = n / 2 - 1; i >= 0; i--)
+		making_heap(a, n, i);// in this array .- >index "2" parent check, and "1" check and lastly check from root to last parent
+	for (i = n - 1; i > 0; i--) {
+		swap(&a[0], &a[i]);
+		making_heap(a, i, 0); // how the last parameter works? -> it can only check half of the value.  because if there is changed . the changing can be only happened in one side of tree. so need to check only one side.
+
+
+	}
+
+
+
+}
+
+void print(int a[], int n) {
+
+	int i;
+
+	for (i = 0; i < n; i++) {
+		printf("%4d", a[i]);
+
+	}
+}
+
+int main() {
+
+	int arr[7] = { 22,5,11,32,120,68,70 };
+
+	call_heap_sort(arr, 7);
+
+	print(arr, 7);
+
+
+}
