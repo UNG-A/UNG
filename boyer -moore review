@@ -16,7 +16,8 @@ void Make_Bad_Match(char* pat) {
 	}
 	for (int i = 0; i < length-1; i++) {// don't need to make the last index skip table  because it the last index is not matched it will be skipped the length of the array.
 
-		Bad_Table[pat[i]] = length - i - 1;
+		Bad_Table[pat[i]] = length - i - 1; // I confuse about this . Bad_Table['A']?  -> I was curious about this how this is work? I just calloc 0~UCHAR_MAX+1. but it makes sense in ASCII -> Uchar_max =255 . and it means it is about checking all letter. -> so how could we save the value in "A" 
+		//by using ASCII code!
 		
 	}
 
