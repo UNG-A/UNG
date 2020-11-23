@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+int * Bad_Table = NULL;
+
+
+void Make_Bad_Match(char* pat) {
+
+	int length = strlen(pat);
+	
+	Bad_Table = calloc(UCHAR_MAX +1, sizeof(int));
+
+	for (int i = 0; i <= UCHAR_MAX ; i++) {
+		Bad_Table[i] = length;
+	}
+	for (int i = 0; i < length-1; i++) {// don't need to make the last index skip table  because it the last index is not matched it will be skipped the length of the array.
+
+		Bad_Table[pat[i]] = length - i - 1;
+		
+	}
+
+
+}
+/*
+int Good_suffix(char* text, char* pat, int pat_len) {
+
+
+
+}
+
+void Boyer_Moore(char* text, char* pat, int pat_len) {
+
+	while(text[pt]!=NULL)
+
+	if(text[pt] != pat[pp])
+
+	 A= bad match table(text ,pat) -> No need to make a function . insufficient.
+	 B=good suffix rule(text,pat)
+
+	Result =(A<B) ? B:A;
+	pt+=Result; , pp= (pp.length)
+
+
+}
+
+*/
+int main() {
+
+	char* text = "ABCXDEZCABACABAC";
+	char* pat = "ABAC";
+	Make_Bad_Match(pat);
+	char hint = 'A';
+	printf("%d", Bad_Table[hint]);
+
+}
+/*
+
+The pointer variable size are all the same size as the memory address. The pointers do contain the address of one memory cell that as its size, that is the first r the last byte of a piece of data in memory. ... The size of a pointer sometimes depend on the environment like the machine and the compiler.
+
+*/
