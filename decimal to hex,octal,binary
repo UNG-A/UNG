@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+//binary number octal number  decimal number hexa decimal.
+
+
+void print(int *arr,int *number) {
+	
+	int i;
+	for (i = (*number)-1; i >= 0; i--) {
+		printf("%d", arr[i]);// if hexa decimal how can I print elements that I want? .if there is A it will be 65. so Make anohter print function and make solution
+	}
+
+
+
+}
+//print 2 -> how to print the number with alpahbet? -> ummmmm basically use the %d and if the number is bigger than 65 -> change to %c.
+print_hex(int* arr, int* number) {
+	int i;
+	for (i = (*number) - 1; i >= 0; i--) {
+		if(arr[i]>=65)
+		printf("%c", arr[i]);
+		else
+		printf("%d", arr[i]);
+	}
+	
+}
+
+int solution(int num, char arr[],int data) {
+	
+	int* temp = calloc(100, sizeof(int));
+	int counter = 0;
+	switch (data)
+	{
+	default:
+		
+		//decimal to binary
+	case 2:
+		while (num > 0) {
+
+			temp[counter++] = num % 2;
+			num /= 2;
+
+		}
+		break;
+		//decimal to octal
+	case 8:
+		while (num > 0) {
+			temp[counter++] = num % 8;
+			num /= 8;
+		}
+		break;
+		//decimal to hexa decimal
+	case 16:
+		while (num > 0) {
+			temp[counter++] = arr[num % 16];
+			num /= 16;
+		}
+
+		break;
+
+	}
+	//pass the counter value so I can print the value.
+	if(data==2 || data==8)print(temp,&counter);
+	else {
+		print_hex(temp,& counter);
+	}
+ }
+
+
+
+
+
+
+int main() {
+	int dec;
+	char arr[] = { 0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F' };
+	printf("input the decimal number:");
+	scanf_s("%d", &dec);
+
+	solution(dec, arr,16);
+	// implicit casting.
+	//single quotes vs double quotes. that is completely different.
+	
+}
