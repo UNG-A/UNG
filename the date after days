@@ -60,8 +60,14 @@ Date After(Date x, int n) {
 	}
 	// now sum is bigger than temp -> but how much? more than 1month if 25/11 -> sum ( 1~10 month days + the november days)
 	x.d = days[leap][i-1]-(sum -temp); // this is the most confused part.
-	x.m = i - 1;
-
+	// when the last day of month end up 0 value . so need to add condition.
+	if (x.d == 0) {
+		x.d = sum - temp;
+		x.m = i-2;
+	}
+	else {
+		x.m = i - 1;
+	}
 	return x;
 
 
@@ -78,7 +84,7 @@ Date Before(Date x, int n) {
 
 int main() {
 
-	Date x = Dateof(2020, 11, 26);
+	Date x = Dateof(2020, 10, 26);
 	x=After(x, 5);
 	printf("%2d %2d %2d", x.y,x.m+1,x.d);
 
