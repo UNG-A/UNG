@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int days[][12] = { {31,29,31,30,31,30,31,31,30,31,30,31},{31,29,31,30,31,30,31,31,30,31,30,31} };
+
+typedef struct{
+
+	int y;
+	int m;
+	int d;
+
+}Date;
+
+check_leap_year(Date x) {
+	
+	int var = x.y;
+	if (var % 4 == 0 && var % 100 == 0 && var % 400 == 0) return 0;
+	else if (var % 4 == 0 && var % 100 != 0) return 0;
+	else
+		return 1;
+
+}
+
+Date Dateof(int y, int m, int d) {// return the Date structure variable(not a pointer).in here Date is just one of the data type. Date means just one of the type definition. so If I want to return the pointer of this function.
+	// Date *dateof(----)
+
+	Date x;
+	x.y = y;
+	x.m = m;
+	x.d = d;
+	return x;
+
+
+}
+
+Date After(Date x, int n) {
+
+	// case if after n days , the year need to be increased.
+	// case if after n days the month need to be increased.
+	int i;
+	int temp=0;
+	int sum = 0;
+	int leap =  check_leap_year(x);
+	for (int i = 0; i < x.m-1; i++) {
+		temp += days[leap][i];
+	}
+
+	temp += x.d + n; // total days, including n days.
+
+	//if leap year( 366 days over) + 1 year or not (365 days over +1 year)
+
+	if (leap == 0 && temp >= 366) {	x.y += 1; temp -= 366;}
+	if (leap == 1 && temp >= 365) { x.y += 1; temp -= 365;}
+
+	//now change temp to -> x.m,x.d
+
+	for (i = 0; sum <= temp; i++) {
+		sum += days[leap][i];
+	}
+	// now sum is bigger than temp -> but how much? more than 1month if 25/11 -> sum ( 1~10 month days + the november days)
+	x.d = days[leap][i-1]-(sum -temp); // this is the most confused part.
+	x.m = i - 1;
+
+	return x;
+
+
+
+}
+
+Date Before(Date x, int n) {
+
+	// case if after n days , the year need to be decreased.
+	// case if after n days the month need to be decreased.
+
+
+}
+
+int main() {
+
+	Date x = Dateof(2020, 11, 26);
+	x=After(x, 5);
+	printf("%2d %2d %2d", x.y,x.m+1,x.d);
+
+}
