@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+	
+//non_recursive
+
+typedef struct {
+
+	int* arr;
+	int ptr;
+	int max;
+}stk;
+
+
+stk* initializing(int max) {
+
+	stk* s = malloc(sizeof(int));
+	s->max = max;
+	s->arr = calloc(max, sizeof(int));
+	s->ptr = 0;
+
+	return s;
+}
+
+int isEmpty(stk* s) {
+
+	if (s->ptr <= 0)
+		return -1;
+
+}
+void push(stk *s,int n) {
+
+	s->arr[s->ptr++] = n;
+
+}
+
+void pop(stk* s)
+{	
+	printf("%3d", s->arr[--s->ptr]);
+
+}
+
+void non_recur(stk *s,int n) {
+
+	push(s, n);//push the root
+
+	while (n > 1) {
+		n = n - 1;
+		push(s, n);
+	
+	}
+	while (isEmpty(s)!=-1) {
+		if (s->arr[s->ptr - 1] > 2)
+			push(s, n - 2);
+		else
+		pop(s);
+	}
+
+	while (n > 2) {
+		push(s, n - 2);
+	}
+	while (isEmpty(s) != -1) {
+		if (s->arr[s->ptr - 1] > 1)
+			push(s, n - 1);
+		else
+			pop(s);
+	}
+
+}
+
+
+int main() {
+	int n = 4;
+	stk* s = initializing(100);
+	
+	non_recur(s, n);
+}
