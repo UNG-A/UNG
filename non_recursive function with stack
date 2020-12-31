@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+//non_recursive
+
+typedef struct {
+
+	int* arr;
+	int ptr;
+	int max;
+}stk;
+
+
+stk* initializing(int max) {
+
+	stk* s = malloc(sizeof(int));
+	s->max = max;
+	s->arr = calloc(max, sizeof(int));
+	s->ptr = 0;
+
+	return s;
+}
+
+int isEmpty(stk* s) {
+
+	if (s->ptr <= 0)
+		return -1;
+
+}
+void push(stk* s, int n) {
+
+	s->arr[s->ptr++] = n;
+
+}
+
+int pop(stk* s)
+{
+	printf("%3d", s->arr[--s->ptr]);
+	return s->arr[s->ptr];
+}
+
+void non_recur(stk* s, int n) {
+
+	push(s, n);//push the root
+
+	while (n > 1) {
+		n = n - 1;
+		push(s, n);
+
+	}
+	while (isEmpty(s) != -1) {
+
+		n = pop(s);
+
+		if (n == 4)
+			break;
+
+		if (s->arr[s->ptr] > 2)
+			push(s, (s->arr[s->ptr]) - 2);
+	}
+	//the problem is when 4 is pop -> it should be terminated . but didn't cuz of if statement.
+	while ( n > 2) {//this is the problem . the var "n" is not chaged when I input into the stack so If I want to use N, I need to update the N every time when I input the data. so NOW n==1;
+		n = n - 2;
+		push(s, n);
+	}
+
+
+	while (isEmpty(s) != -1) {
+
+		if (n > 1) {
+			n = n - 1;
+			push(s, n);
+
+		}
+		else
+		{
+			pop(s);
+		}
+
+	}
+}
+
+
+int main() {
+	int n = 4;
+	stk* s = initializing(100);
+
+	non_recur(s, n);
+}
