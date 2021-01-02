@@ -1,0 +1,114 @@
+//this is now copied from the   https://hyeonstorage.tistory.com/355
+// I will code again on my own with english exlanation
+
+#include <stdio.h>
+
+// 하노이의 탑
+
+// 1. 기둥 1에서 N-1개의 원반을 기둥 2로 옮긴다.
+// 2. 기둥 1에서 1개의 원반을 기둥 3으로 옮긴다.
+// 3. 기둥 2에서 N-1개의 원반을 기둥 3으로 옮긴다.
+
+// 원반을 from에서 to로 옮긴다.
+void move(int from, int to){
+    printf("\nMove from %d to %d", from, to);
+}
+
+// n개의 원반을 from 에서 by를 거쳐 to로 옮긴다.
+void hanoi(int n, int from, int by, int to){
+    if (n == 1)
+        move(from, to);
+    else{
+        hanoi(n - 1, from, to, by);    // 1번  N-1개의 원반을 기둥3을 거쳐 2로 옮긴다.
+        move(from, to);                // 2번 기둥 1에서 1개의 원반을 기둥 3으롱 롬긴다.
+        hanoi(n - 1, by, from, to);    // 3번 기둥 2에서 N-1개의 원반을 기둥 3으로 옮긴다.
+    }
+}
+
+
+// 비재귀에 사용하기 위한 스택
+#define MAX 100
+int stack[MAX];        // 스택의 긴  통
+int top;            // 스택의 상단
+
+void init_stack(void){
+    top = -1;
+}
+
+int push(int t){
+
+    if (top >= MAX - 1){
+        printf("\n    Stack overflow.");
+        return -1;
+    }
+
+    stack[++top] = t;
+    return t;
+}
+
+int pop(void){
+    if (top < 0){
+        printf("\n   Stack underflow.");
+        return -1;
+    }
+    return stack[top--];
+}
+
+int is_stack_empty(){
+    return (top > -1) ? 0 : 1;
+}
+
+// 하노이의 탑 비재귀로 변환
+void nr_hanoi(int n, int from, int by, int to){
+
+    init_stack();
+    while (1){
+        while (n > 1){
+            push(to);    // 인자리스트 푸쉬
+            push(by);
+            push(from);
+            push(n);
+            n--;        // 인자리스트 변경 1
+            push(to);    // to 와 by를 교환하기 위해 임시로 저장
+            to = by;
+            by = pop();
+        }
+
+        move(from, to);        // 재귀의 마지막 종료 처리 // I was confused with this part. Didn't push hanoi(1,A,B,C) so I thought It was wrong. but I didn't need to . just see the 
+        //this move function even if I didn't push the hanoi function, the parameter value "A" and "B" was swapped. so it will be printed A to c! 
+
+        if (!is_stack_empty()){
+            n = pop();
+            from = pop();
+            by = pop();
+            to = pop();
+
+            move(from, to);        // 실제 이동 작업
+
+            n--;        // 인자리스트 변경 2
+            push(from);
+            from = by;
+            by = pop(); // And this is the second confuseed part . in my code when hanoi(2,B,A,C) was printed it need to be puhsed by first recursive function. But I add to 
+            //second actual pushed task this part. so hanoi(1,A,B,C) was pushed first. so solution is just swapped the parameter here .and push the stack at the top of the while loop.
+            
+        }
+        else{
+            break;
+        }
+    }
+}
+
+void main(void){
+
+    int i = 5;
+
+    hanoi(i, 1, 2, 3);
+
+    printf("\n\n\nNon Recursive Hanoi \n");
+
+    nr_hanoi(i, 1, 2, 3);
+
+    return 0;
+}
+
+출처: https://hyeonstorage.tistory.com/355 [개발이 하고 싶어요]
