@@ -112,3 +112,109 @@ void main(void){
 }
 
 출처: https://hyeonstorage.tistory.com/355 [개발이 하고 싶어요]
+
+
+
+/*
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//HANOI top non_recursive
+
+typedef struct {
+
+	int max;
+	int* arr;
+	int ptr;
+
+}stk;
+
+stk* s;// global scope for not putting struct pointer variable in the hanoi function
+
+
+void move(int n, char a, char b) {
+
+	printf("%2d ,%2c to %2c", n, a, b);
+
+}
+
+
+void swap(char * a, char* b) {
+	char temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+
+stk* initializing(stk *s ,int max) {
+	s->max = max;
+	s->arr = calloc(max, sizeof(int));
+	s->ptr = 0;
+}
+
+int isEmpty(stk *s){
+	if (s->ptr < 0)
+		return -1;
+}
+
+int push(stk* s, int a) {
+
+	s->arr[s->ptr++] = a;
+	
+}
+
+int pop(stk *s) {
+
+	s->arr[--s->ptr];
+
+}
+
+void hanoi_Top(int n, char A, char B, char C) {
+	
+	while (1) {
+
+		while (n > 1) {
+
+			push(s,n);
+			push(s,A);
+			push(s, B);
+			push(s, C);
+			
+			n--;
+			swap(&B, &C);
+		}
+
+		move(n, A, C);
+
+		if (isEmpty(s) != -1) {
+			C=pop(s);
+			B = pop(s);
+			A = pop(s);
+			n = pop(s);
+			
+			move(n, A, C);
+
+			swap(&A, &B);
+
+		}
+
+		else {
+			break;
+		}
+
+
+	}
+
+}
+
+
+int main() {
+	s = malloc(sizeof(int));
+	s = initializing(s,100);
+	char from = 'A';
+	char by = 'B';
+	char to = 'C';
+	hanoi_Top(3, from, by, to);
+
+}
