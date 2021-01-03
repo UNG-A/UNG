@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// this is the all of the cases about recursion with chass.
+int pos[8];
+int flag[8]; // this function index value is not '0' !flag[i] will be true.
+int flag_b[15];
+int flag_c[15];
+
+
+void print() {
+
+	int i;
+	for (i = 0; i < 8; i++) {
+
+		printf("%2d", pos[i]);
+		
+	}
+	printf("\n");
+}
+
+//the point is the braces in the function. 
+/*
+the logic 
+1.the for loop should be exectued for several times til finding a empty index. so need to be not executed recursion before finding the empty place.
+at this point need to appropriate 
+*/
+void set(int i) {
+	int j;
+	for (j = 0; j < 8; j++) {
+
+		if (!flag[j]) {
+			pos[i] = j;
+
+			if (i == 7)
+				print();
+
+			//	} // is this the part that I emphasized at the top of execution. if I put brace in here. the recursion will be executed before filling the flag[j]
+				  // so will be placed at the end of the else statement.
+			else {
+				flag[j] = 1;
+				set(i + 1);
+				flag[j] = 0;
+			}
+		}
+	}
+}
+
+
+int main() {
+
+	int i = 0;
+	set(0);
+
+}
+
