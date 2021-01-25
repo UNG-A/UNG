@@ -1,0 +1,42 @@
+#define _CRT_SECURE_NO_WARNINGS //fuxking scanf_s secure code
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int check_bracket(char* a) {
+
+	int i = 0;
+	int j = 1;
+	if (strlen(a) % 2 != 0)
+		return -1;
+	//now the number of string is matched.
+	else {
+
+		while (a[i] != NULL && a[j] !=NULL) {
+
+			if (a[i] != '(' || a[j] !=')')
+				return -1;
+			else {
+				i +=2;
+				j +=2;
+			}
+
+		}
+
+	}
+	return 1;
+}
+
+
+int main() {
+
+	int judge;
+	char* a = calloc(100, sizeof(int));
+	printf("input the data: ");
+	scanf("%s", a);
+	judge = check_bracket(a);
+	if (judge == 1)
+		printf("TRUE");
+	else
+		printf("False");
+}
